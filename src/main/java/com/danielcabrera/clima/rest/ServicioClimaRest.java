@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.danielcabrera.clima.service.ServicioMetereologico;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
+@RequiredArgsConstructor
 public class ServicioClimaRest {
-	@Autowired
-	private ServicioMetereologico servicioMetereologico;
+	
+	private final ServicioMetereologico servicioMetereologico;
 
 	@GetMapping("/clima")
 	public ResponseEntity consultarClimaPorDia(@RequestParam(name="dia", required=true) String dia) {

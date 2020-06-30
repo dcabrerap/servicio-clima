@@ -10,11 +10,14 @@ import com.danielcabrera.clima.domain.Clima;
 import com.danielcabrera.clima.domain.Reporte;
 import com.danielcabrera.clima.service.ServicioMetereologico;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
 public class ControllerServicioMetereologico {
 	
-	@Autowired
-	private ServicioMetereologico servicioMetereologico;
+	//@Autowired
+	private final ServicioMetereologico servicioMetereologico;
 
 	@GetMapping("/")
 	public String consultarReporte(@RequestParam(name="dias", required=false, defaultValue="3600") String dias,Model model) {
