@@ -7,6 +7,8 @@ import static com.danielcabrera.clima.domain.Constantes.PLANET_FERENGI_SOLAR_DIS
 import static com.danielcabrera.clima.domain.Constantes.PLANET_VULCANO_ANGULAR_SPEED;
 import static com.danielcabrera.clima.domain.Constantes.PLANET_VULCANO_SOLAR_DISTANCE;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.PostConstruct;
@@ -32,6 +34,7 @@ public class ServicioMetereologico {
     }
 
 	public Reporte procesarPeriodo(int numeroDias, boolean populateDatabase) {
+		boolean databaseEmpty = climaRepository.count()==0;
 		Planeta Ferengi = new Planeta();
 		Ferengi.setDistanciaSolar(PLANET_FERENGI_SOLAR_DISTANCE);
 		Ferengi.setVelocidadAngular(PLANET_FERENGI_ANGULAR_SPEED);
@@ -53,6 +56,7 @@ public class ServicioMetereologico {
 		double areaMaxima = 0;
 		double area = 0;
 		int diaPicoMaximoLLuvia = 0;
+		List<Clima> list = new ArrayList<Clima>(); 
 		for (int dia = 0; dia < numeroDias; dia++) {
 			actualizarPosicion(Ferengi, dia);
 			actualizarPosicion(Betasoide, dia);
@@ -81,10 +85,15 @@ public class ServicioMetereologico {
 				areaMaxima = area;
 				diaPicoMaximoLLuvia = dia;
 			}
-			if(populateDatabase)
-				climaRepository.save(clima);
+			if(databaseEmpty)
+				list.add(clima);
 			
 		}
+		
+		if(databaseEmpty && populateDatabase)
+			climaRepository.saveAll(list);
+		
+
 
 		Reporte reporte = new Reporte();
 		reporte.setDiaPicoMaximoLLuvia(diaPicoMaximoLLuvia);
@@ -100,6 +109,7 @@ public class ServicioMetereologico {
 		return climaRepository.findFirstByDia(dia);
 	}
 
+	
 	private void actualizarPosicion(Planeta planet, int day) {
 		double newAngle = day * planet.getVelocidadAngular();
 		planet.setAngulo(newAngle);
