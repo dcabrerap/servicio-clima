@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Sistema de Reporte Metereologio</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Reporte para <a th:text="${dias}" /> días</h1>
+	<table>
+		<tr>
+			<td>Días de sequía:</td>
+			<td><p th:text="${reporte.diasSequia}" /></td>
+		</tr>
+		<tr>
+			<td>Días de lluvia:</td>
+			<td><p th:text="${reporte.diasLLuvia}" /></td>
+		</tr>
+		<tr>
+			<td>Día Pico Maximo lluvia:</td>
+			<td><p th:text="${reporte.diaPicoMaximoLLuvia}" /></td>
+		</tr>
+		<tr>
+			<td>Días de condiciones óptimas:</td>
+			<td><p th:text="${reporte.diasCondicionesOptimas}" /></td>
+		</tr>		
+		
+	</table>
+</body>
+</html>
