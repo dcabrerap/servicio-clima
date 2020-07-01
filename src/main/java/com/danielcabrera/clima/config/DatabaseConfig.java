@@ -25,12 +25,8 @@ public class DatabaseConfig {
 	@Value( "${spring.datasource.password}" )
 	private String password;
 
-	
-
-	
     @Bean
     public DataSource datasource() {
-    	System.out.println("--------------->"+url);
         return DataSourceBuilder.create()
           .driverClassName(className)
           .url(url)
@@ -38,17 +34,5 @@ public class DatabaseConfig {
           .password(password)
           .build(); 
     }
-    
-//    @Bean
-//    public DataSource datasource() {
-//        return DataSourceBuilder.create()
-//          .driverClassName("com.mysql.cj.jdbc.Driver")
-//          .url("jdbc:mysql://localhost:3306/myDb")
-//          .username("user1")
-//          .password("pass")
-//          .build(); 
-//    }
-
-	
 
 }
